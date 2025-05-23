@@ -54,3 +54,10 @@ class UserCreateSerializer(serializers.Serializer):
             raise serializers.ValidationError("El correo electrónico ya está en uso")
         return value
 
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(
+        required=True,
+        style={'input_type': 'password'},
+        trim_whitespace=False
+    )

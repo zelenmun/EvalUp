@@ -6,6 +6,7 @@ import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import {toast} from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
+import 'boxicons/css/boxicons.min.css'
 
 export default function SignUpForm() {
     const [showPassword, setShowPassword] = useState(false);
