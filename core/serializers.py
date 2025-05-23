@@ -25,11 +25,11 @@ class PasswordValidator:
         return value
 
 class UserCreateSerializer(serializers.Serializer):
-    firstName = serializers.CharField(max_length=100)
-    lastName = serializers.CharField(max_length=100)
-    email = serializers.EmailField()
-    password = serializers.CharField(write_only=True)
-    terms = serializers.BooleanField(write_only=True)
+    firstName = serializers.CharField(max_length=100,error_messages={'blank': 'Debe ingresar un nombre'})
+    lastName = serializers.CharField(max_length=100, error_messages={'blank': 'Debe ingresar un apellido'})
+    email = serializers.EmailField(error_messages={'blank': 'Debe ingresar un correo electrónico'})
+    password = serializers.CharField(write_only=True, error_messages={'blank': 'Debe ingresar una contraseña'})
+    terms = serializers.BooleanField()
 
     def validate_password(self, value):
         if len(value) < 8:
@@ -50,18 +50,7 @@ class UserCreateSerializer(serializers.Serializer):
         return value
 
     def validate_email(self, value):
-        if Persona.objects.filter(email=value).exists():
+        if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("El correo electrónico ya está en uso")
         return value
 
-class UserPersonaSerializer(UserCreateSerializer):
-
-    def create(self, validated_data):
-        email = validated_data['email']
-        password = validated_data['password']
-        first_name  = validated_data['firstName']
-        last_name  = validated_data['lastName']
-
-        user = User.objects.create_user(username=email, email=email, password=password)
-        persona = Persona.objects.create(user=user, first_name=first_name, last_name=last_name )
-        return persona

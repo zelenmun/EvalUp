@@ -5,11 +5,12 @@ import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import {toast} from "react-hot-toast";
-
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUpForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    const navigate = useNavigate();
 
     // Función para manejar el envío del formulario
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,17 +35,33 @@ export default function SignUpForm() {
             if (response.ok) {
                 const data = await response.json();
                 toast.success(data.message);
+                // Redirigir al usuario a la página de inicio de sesión o a otra página
+                setTimeout(() => {
+                    navigate('/signin'); // o a donde quieras mandarlo
+                }, 1500); // delay opcional pa' que vea el toast
             } else {
                 const errorData = await response.json();
-                console.log(errorData)
 
-                if (errorData.password) {
-                    errorData.password.forEach((msg: string) => toast.error(msg));
+                if (errorData.result === false) {
+                    toast.error(errorData.message);
                 } else {
-                    errorData.terms.forEach((msg: string) => toast.error(msg));
+                    Object.entries(errorData).forEach(([campo, mensajes]) => {
+                        let cmp = '';
+                        if (campo === 'firstName') {
+                            cmp = "Nombre"
+                        } else if (campo === 'lastName') {
+                            cmp = "Apellido"
+                        } else if (campo === 'email') {
+                            cmp = "Correo electrónico"
+                        } else if (campo === 'password') {
+                            cmp = "Contraseña"
+                        } else if (campo === 'terms') {
+                            cmp = "Términos y condiciones"
+                        }
+                        (mensajes as string[]).forEach(msg => toast.error(<span><strong>{cmp}:</strong> {msg}</span>));
+                    });
                 }
             }
-
         } catch (error) {
             console.error('Error de conexión:', error);
         }

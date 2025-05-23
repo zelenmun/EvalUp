@@ -27,6 +27,7 @@ class Persona(BaseModel):
     fecha_nacimiento = models.DateField(null=True, blank=True)
     genero = models.ForeignKey(Gender, on_delete=models.SET_NULL, null=True, blank=True)
     telefono = models.CharField(max_length=20, null=True, blank=True)
+    correo = models.EmailField(max_length=100, unique=True, null=True, blank=True)
     direccion = models.CharField(max_length=255, null=True, blank=True)
     pais = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
