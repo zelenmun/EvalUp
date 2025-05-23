@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 .env
 *.env
-
+**/migrations/*.py
+!**/migrations/__init__.py
