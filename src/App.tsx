@@ -18,11 +18,14 @@ import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import { Toaster } from "react-hot-toast";
+
 
 export default function App() {
   return (
     <>
       <Router>
+        <Toaster position="top-center" />
         <ScrollToTop />
         <Routes>
           {/* Dashboard Layout */}
