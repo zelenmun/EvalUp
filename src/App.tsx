@@ -19,50 +19,54 @@ import AppLayout from "./layout/AppLayout";
 import {ScrollToTop} from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import {AuthProvider} from './components/auth/AuthContext';
+import {Toaster} from "react-hot-toast";
 
 
 export default function App() {
     return (
-        <AuthProvider>
-            <Router>
-                <ScrollToTop/>
-                <Routes>
-                    {/* Dashboard Layout */}
-                    <Route element={<AppLayout/>}>
-                        <Route index path="/" element={<Home/>}/>
+        <>
+            <AuthProvider>
+                <Toaster position="bottom-right"/>
+                <Router>
+                    <ScrollToTop/>
+                    <Routes>
+                        {/* Dashboard Layout */}
+                        <Route element={<AppLayout/>}>
+                            <Route index path="/" element={<Home/>}/>
 
-                        {/* Others Page */}
-                        <Route path="/profile" element={<UserProfiles/>}/>
-                        <Route path="/calendar" element={<Calendar/>}/>
-                        <Route path="/blank" element={<Blank/>}/>
+                            {/* Others Page */}
+                            <Route path="/profile" element={<UserProfiles/>}/>
+                            <Route path="/calendar" element={<Calendar/>}/>
+                            <Route path="/blank" element={<Blank/>}/>
 
-                        {/* Forms */}
-                        <Route path="/form-elements" element={<FormElements/>}/>
+                            {/* Forms */}
+                            <Route path="/form-elements" element={<FormElements/>}/>
 
-                        {/* Tables */}
-                        <Route path="/basic-tables" element={<BasicTables/>}/>
+                            {/* Tables */}
+                            <Route path="/basic-tables" element={<BasicTables/>}/>
 
-                        {/* Ui Elements */}
-                        <Route path="/alerts" element={<Alerts/>}/>
-                        <Route path="/avatars" element={<Avatars/>}/>
-                        <Route path="/badge" element={<Badges/>}/>
-                        <Route path="/buttons" element={<Buttons/>}/>
-                        <Route path="/images" element={<Images/>}/>
-                        <Route path="/videos" element={<Videos/>}/>
+                            {/* Ui Elements */}
+                            <Route path="/alerts" element={<Alerts/>}/>
+                            <Route path="/avatars" element={<Avatars/>}/>
+                            <Route path="/badge" element={<Badges/>}/>
+                            <Route path="/buttons" element={<Buttons/>}/>
+                            <Route path="/images" element={<Images/>}/>
+                            <Route path="/videos" element={<Videos/>}/>
 
-                        {/* Charts */}
-                        <Route path="/line-chart" element={<LineChart/>}/>
-                        <Route path="/bar-chart" element={<BarChart/>}/>
-                    </Route>
+                            {/* Charts */}
+                            <Route path="/line-chart" element={<LineChart/>}/>
+                            <Route path="/bar-chart" element={<BarChart/>}/>
+                        </Route>
 
-                    {/* Auth Layout */}
-                    <Route path="/login" element={<SignIn/>}/>
-                    <Route path="/signup" element={<SignUp/>}/>
+                        {/* Auth Layout */}
+                        <Route path="/login" element={<SignIn/>}/>
+                        <Route path="/signup" element={<SignUp/>}/>
 
-                    {/* Fallback Route */}
-                    <Route path="*" element={<NotFound/>}/>
-                </Routes>
-            </Router>
-        </AuthProvider>
+                        {/* Fallback Route */}
+                        <Route path="*" element={<NotFound/>}/>
+                    </Routes>
+                </Router>
+            </AuthProvider>
+        </>
     );
 }

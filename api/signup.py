@@ -7,9 +7,12 @@ from django.contrib.auth.models import User
 from core.models import Persona
 from core.funciones import generarUsername, normalizarTexto
 from django.contrib.auth.hashers import make_password
-
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
+from rest_framework.authtoken.models import Token
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def create_user(request):
     serializer = UserCreateSerializer(data=request.data)
     if serializer.is_valid():
@@ -36,6 +39,8 @@ def create_user(request):
             )
 
             persona.save(request)
+
+            token, created = Token.objects.get_or_create(user=user)
         except Exception as ex:
             return Response({'result': False, 'message': 'Error al crear el usuario'}, status=status.HTTP_400_BAD_REQUEST)
 

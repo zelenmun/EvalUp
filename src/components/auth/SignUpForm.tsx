@@ -38,7 +38,7 @@ export default function SignUpForm() {
                 toast.success(data.message);
                 // Redirigir al usuario a la página de inicio de sesión o a otra página
                 setTimeout(() => {
-                    navigate('/signin'); // o a donde quieras mandarlo
+                    navigate('/login'); // o a donde quieras mandarlo
                 }, 1500); // delay opcional pa' que vea el toast
             } else {
                 const errorData = await response.json();

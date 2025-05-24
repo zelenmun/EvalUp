@@ -31,8 +31,8 @@ export default function SignInForm() {
             });
 
             if (result.success) {
-                toast.success("¡Bienvenido! Sesión iniciada correctamente", {
-                    position: "top-center",
+                toast.success("¡Bienvenido! ", {
+                    position: "bottom-right",
                     duration: 4000,
                 });
                 navigate("/"); // Redirigir al dashboard después del login

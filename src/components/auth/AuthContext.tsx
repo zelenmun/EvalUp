@@ -6,8 +6,8 @@ import React, {createContext, useContext, useState, useEffect} from 'react';
 interface UserData {
     id: number;
     username: string;
-    first_name: string;
-    last_name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     role: string;
     is_active: boolean;
@@ -34,6 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
     const [user, setUser] = useState<UserData | null>(null);
     const [loading, setLoading] = useState(true);
     const [token, setToken] = useState<string | null>(null);
+    console.log(token)
 
     useEffect(() => {
         const savedToken = localStorage.getItem('authToken');
@@ -52,6 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`
                 },
                 body: JSON.stringify(credentials),
             });

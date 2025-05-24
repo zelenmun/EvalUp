@@ -65,18 +65,25 @@ class Respuesta(BaseModel):
     def __str__(self):
         return self.texto or f"Respuesta a: {self.pregunta} ({self.puntaje or '0'}/{self.pregunta.puntaje})"
 
+class Notificacion(BaseModel):
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE, related_name='notificaciones')
+    mensaje = models.TextField()
+    leida = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Notificación para {self.persona} - {self.mensaje[:20]}"
+
 
 
 # ESTADO_EXAMEN = (
-#     (0, 'PENDIENTE'),
-#     (1, 'EN PROCESO'),
-#     (2, 'FINALIZADO'),
-#     (3, 'CANCELADO'),
-#     (4, 'REVISADO'),
-#     (5, 'NO PRESENTADO'),
+#     (1, 'PENDIENTE'),
+#     (2, 'EN PROGRESO'),
+#     (3, 'EXAMEN COMPLETADO'),
+#     (4, 'EXAMEN CALIFICADO'),
 # )
 
-class EstadoExamen(models.Model):
+class EstadoExamen(BaseModel):
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, null=True)
 
@@ -84,13 +91,12 @@ class EstadoExamen(models.Model):
         return self.nombre
 
 # TIPO_PREGUNTA = (
-#     (0, 'OPCIÓN ÚNICA'),
-#     (1, 'OPCION_MULTIPLE'),
+#     (1, 'SELECCIÓN MÚLTIPLE'),
 #     (2, 'VERDADERO_FALSO'),
-#     (3, 'JUSTIFICACION'),
+#     (3, 'RESPUESTA CORTA'),
 # )
 
-class TipoPregunta(models.Model):
+class TipoPregunta(BaseModel):
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, null=True)
 
@@ -103,7 +109,7 @@ class TipoPregunta(models.Model):
 #     (2, 'FALSO'),
 # )
 
-class VerdaderoFalso(models.Model):
+class VerdaderoFalso(BaseModel):
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, null=True)
 
@@ -111,12 +117,12 @@ class VerdaderoFalso(models.Model):
         return self.nombre
 
 # ESTADO_PREGUNTA = (
-#     (0, 'SIN RESPONDER'),
-#     (1, 'RESPONDIDA'),
-#     (2, 'NO RESPONDIDA'),
+#     (3, 'ACTIVA'),
+#     (2, 'INACTIVA'),
+#     (3, 'REVISADA'),
 # )
 
-class EstadoPregunta(models.Model):
+class EstadoPregunta(BaseModel):
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, null=True)
 
@@ -124,12 +130,13 @@ class EstadoPregunta(models.Model):
         return self.nombre
 
 # NIVEL_EXAMEN = (
-#     (0, 'BÁSICO'),
-#     (1, 'INTERMEDIO'),
-#     (2, 'AVANZADO'),
+#     (1, 'BÁSICO'),
+#     (2, 'INTERMEDIO'),
+#     (3, 'AVANZADO'),
+#     (4, 'EXPERTO'),
 # )
 
-class NivelExamen(models.Model):
+class NivelExamen(BaseModel):
     nombre = models.CharField(max_length=100, unique=True)
     descripcion = models.TextField(blank=True, null=True)
 
